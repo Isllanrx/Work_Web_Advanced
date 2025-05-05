@@ -3,7 +3,7 @@
     <div class="user-info">
       <label class="image-upload-label">
         <img
-          [src]="getImageUrl(currentUser?.imagem || '/images/padrao.png')"
+          [src]="getImageUrl(currentUser?.imagem || '/images/default.png')"
           [alt]="currentUser?.nome"
           class="user-avatar"
           (error)="onImageError($event)"
