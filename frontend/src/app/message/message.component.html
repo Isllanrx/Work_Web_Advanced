@@ -66,20 +66,6 @@
   </div>
 
   <div class="message-input message-input-vertical">
-    <!-- <div class="message-type-selector message-type-selector-below">
-      <label>
-        <input type="radio" [(ngModel)]="selectedMessageType" value="message" checked>
-        Mensagem
-      </label>
-      <label>
-        <input type="radio" [(ngModel)]="selectedMessageType" value="alert">
-        Alerta
-      </label>
-      <label>
-        <input type="radio" [(ngModel)]="selectedMessageType" value="info">
-        Informação
-      </label>
-    </div> -->
     <label for="message-type">Tipo Mensagem: </label>
     <select class="message-type-selector message-type-selector-below" [(ngModel)]="selectedMessageType" id="message-type">
       <option value="message">Mensagem</option>
