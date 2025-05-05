@@ -1,0 +1,90 @@
+<div class="message-container">
+  <div class="message-header">
+    <div class="user-info">
+      <label for="image-upload" class="image-upload-label">
+        <img
+          [src]="getImageUrl(currentUser?.imagem || '/images/padrao.png')"
+          [alt]="currentUser?.nome"
+          class="user-avatar"
+          (error)="onImageError($event)"
+        >
+      </label>
+      <input
+        type="file"
+        id="image-upload"
+        accept="image/*"
+        (change)="onImageSelected($event)"
+        style="display: none"
+      >
+      <span class="user-name">{{ currentUser?.nome }}</span>
+    </div>
+    <button (click)="logout()" class="logout-button">Logout</button>
+  </div>
+
+  <div class="message-list">
+    <div *ngFor="let message of messages" class="message-item">
+      <div class="message-user">
+        <img
+          [src]="getImageUrl(message.user.imagem)"
+          [alt]="message.user.nome"
+          class="user-avatar"
+          (error)="onImageError($event)"
+        >
+        <span class="user-name">{{ message.user.nome }}</span>
+      </div>
+      <div class="message-content" [ngClass]="'message-content-type-' + message.type">
+        <div *ngIf="!message.isEditing">
+          <p>{{ message.content }}</p>
+          <span class="message-time">{{ message.timestamp | date:'short' }}</span>
+          <div class="message-actions" *ngIf="currentUser?._id === message.user._id">
+            <button class="action-button edit-button" (click)="startEdit(message)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-button delete-button" (click)="deleteMessage(message)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="message.isEditing" class="edit-form">
+          <input
+            type="text"
+            [(ngModel)]="message.editedContent"
+            (keyup.enter)="saveEdit(message)"
+            (keyup.escape)="cancelEdit(message)"
+          >
+          <div class="edit-actions">
+            <button class="save-button" (click)="saveEdit(message)">Salvar</button>
+            <button class="cancel-button" (click)="cancelEdit(message)">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="message-input message-input-vertical">
+    <div class="message-type-selector message-type-selector-below">
+      <label>
+        <input type="radio" [(ngModel)]="selectedMessageType" value="message" checked>
+        Mensagem
+      </label>
+      <label>
+        <input type="radio" [(ngModel)]="selectedMessageType" value="alert">
+        Alerta
+      </label>
+      <label>
+        <input type="radio" [(ngModel)]="selectedMessageType" value="info">
+        Informação
+      </label>
+    </div>
+    <div class="input-row">
+      <input
+        type="text"
+        [(ngModel)]="newMessage"
+        placeholder="Digite sua mensagem..."
+        (keyup.enter)="sendMessage()"
+      >
+      <button (click)="sendMessage()">Enviar</button>
+    </div>
+    
+  </div>
+</div>
