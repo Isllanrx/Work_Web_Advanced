@@ -1,7 +1,7 @@
 <div class="message-container">
   <div class="message-header">
     <div class="user-info">
-      <label for="image-upload" class="image-upload-label">
+      <label class="image-upload-label">
         <img
           [src]="getImageUrl(currentUser?.imagem || '/images/padrao.png')"
           [alt]="currentUser?.nome"
@@ -9,14 +9,18 @@
           (error)="onImageError($event)"
         >
       </label>
-      <input
-        type="file"
-        id="image-upload"
-        accept="image/*"
-        (change)="onImageSelected($event)"
-        style="display: none"
-      >
       <span class="user-name">{{ currentUser?.nome }}</span>
+      <label class="change-image-button" for="image-upload">
+        Mudar imagem
+        <input
+          type="file"
+          id="image-upload"
+          accept="image/*"
+          (change)="onImageSelected($event)"
+          style="display: none"
+        >
+      </label>
+      
     </div>
     <button (click)="logout()" class="logout-button">Logout</button>
   </div>
@@ -62,7 +66,7 @@
   </div>
 
   <div class="message-input message-input-vertical">
-    <div class="message-type-selector message-type-selector-below">
+    <!-- <div class="message-type-selector message-type-selector-below">
       <label>
         <input type="radio" [(ngModel)]="selectedMessageType" value="message" checked>
         Mensagem
@@ -75,7 +79,13 @@
         <input type="radio" [(ngModel)]="selectedMessageType" value="info">
         Informação
       </label>
-    </div>
+    </div> -->
+    <label for="message-type">Tipo Mensagem: </label>
+    <select class="message-type-selector message-type-selector-below" [(ngModel)]="selectedMessageType" id="message-type">
+      <option value="message">Mensagem</option>
+      <option value="alert">Alerta</option>
+      <option value="info">Informação</option>
+    </select>
     <div class="input-row">
       <input
         type="text"

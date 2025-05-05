@@ -7,6 +7,19 @@
   height: calc(100vh - 4rem);
 }
 
+.change-image-button {
+  padding: 0.5rem 1rem;
+  background-color: #369145;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.change-image-button:hover {
+  background-color: #33683c;
+}
+
 .message-header {
   display: flex;
   justify-content: space-between;
