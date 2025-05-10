@@ -80,8 +80,8 @@ label {
 
 /* Estilo para os campos de entrada */
 input {
-  width: 100%;
-  max-width: 400px; 
+  width: 85%;
+  max-width: 400px;
   padding: 0.85rem;
   border: 1px solid #ccc;
   border-radius: 12px;
