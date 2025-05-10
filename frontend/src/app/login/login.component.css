@@ -1,37 +1,153 @@
+/* Container de autenticação */
 .auth-container {
   max-width: 400px;
   margin: 2rem auto;
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  background: #006ea18e;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease-in-out;
+  color: #fff9f9;
+  animation: slideIn 0.8s ease-out;
 }
 
+.title {
+  text-align: center;
+}
+
+.auth-container a {
+  color: white;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.auth-container a:hover {
+  color: black;
+}
+
+/* Efeito de animação para o slide-in */
+@keyframes slideIn {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Fundo preto */
+body {
+  background: #000000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  animation: fadeInBackground 1s ease-in;
+}
+
+/* Animação para o fundo preto */
+@keyframes fadeInBackground {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Estilo dos grupos de campos */
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  animation: fadeIn 0.5s ease-out;
 }
 
+/* Estilo dos rótulos */
 label {
   display: block;
   margin-bottom: 0.5rem;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
 }
 
+/* Estilo para os campos de entrada */
 input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  max-width: 400px; 
+  padding: 0.85rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background: #f9f9f9;
+  color: #000000;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  transition: all 0.3s ease-in-out;
+  animation: fadeIn 0.5s ease-out;
 }
 
+input[_ngcontent-ng-c3211403291] {
+  width: 85%;
+}
+input:focus {
+  outline: none;
+  border-color: #4caf50;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Estilo do botão */
 button {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #369145;
+  width: 150px;
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(45deg, #006ea18e, #81c784);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.5s ease-out;
 }
 
 button:hover {
-  background-color: #33683c;
+  background: linear-gradient(45deg, #81c784, #4caf50);
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+button:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Animação de fade-in para todos os elementos */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
