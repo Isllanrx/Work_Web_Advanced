@@ -6,12 +6,15 @@ const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const authMiddleware = require('../middlewares/auth.middleware');
 const adminMiddleware = require('../middlewares/admin.middleware');
+const { hash, compare } = require('bcrypt');
 
 function userRouter() {
     router.post('/login', async (req, res) => {
         try {
-            const { email, senha } = req.body;
-            const user = await User.findOne({ email, senha });
+            
+            const { email } = req.body;
+            const user = await User.findOne({ email });
+            const checkPassword = await compare(req.body.password, user.password);
             if (user){
                 res.status(200).json({
                     message: 'Usuário habilitado a logar',
@@ -34,6 +37,8 @@ function userRouter() {
 
     router.post('/', async (req, res) => {
         try {
+            const passwordHash = await hash(req.body.password, 10);
+            req.body.password = passwordHash;
             const user = new User(req.body)
             await user.save();
             res.status(201).json(user);

@@ -9,7 +9,7 @@ function messageRouter() {
 
     router.get('/', async (req, res) => {
         try {
-            const messages = await Message.find().sort({ createdAt: -1 });
+            const messages = await Message.find().sort({ createdAt: -1 }).where({ $or: [{ destination: null}, { destination: req.userId }, { autorId: req.userId }] });
             res.json(messages);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao buscar mensagens' });
