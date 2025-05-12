@@ -21,6 +21,7 @@ interface Message {
   isEditing?: boolean;
   editedContent?: string;
   type: 'message' | 'alert' | 'info';
+  destination?: string;
 }
 
 interface User {
@@ -70,7 +71,9 @@ export class MessageComponent implements OnInit, OnDestroy {
 
     // Iniciar polling a cada 3 segundos
     this.pollingSubscription = interval(3000).subscribe(() => {
-      if(!this.editingMessage) this.loadMessages();
+      if(!this.editingMessage) {
+        this.loadMessages();
+      }
     });
   }
 
@@ -89,38 +92,40 @@ export class MessageComponent implements OnInit, OnDestroy {
     })
       .subscribe({
         next: async (response: any) => {
-          const messagesPromises = response.map(async (msg: any) => {
-            let user = this.userCache[msg.autorId];
+          const messagesPromises = response
+            .filter((msg: any) => !msg.destination) // Only show public messages
+            .map(async (msg: any) => {
+              let user = this.userCache[msg.autorId];
 
-            if (!user) {
-              try {
-                const userData: any = await this.http.get(`${this.apiUrl}/api/usuarios/${msg.autorId}`, {
-                  headers: this.authService.getAuthHeaders()
-                }).toPromise();
-                user = {
-                  _id: userData._id,
-                  nome: userData.nome,
-                  imagem: userData.imagem || '/images/padrao.png'
-                };
-                this.userCache[msg.autorId] = user;
-              } catch (error) {
-                console.error('Error loading user:', error);
-                user = {
-                  _id: msg.autorId,
-                  nome: 'Usuário',
-                  imagem: '/images/padrao.png'
-                };
+              if (!user) {
+                try {
+                  const userData: any = await this.http.get(`${this.apiUrl}/api/usuarios/${msg.autorId}`, {
+                    headers: this.authService.getAuthHeaders()
+                  }).toPromise();
+                  user = {
+                    _id: userData._id,
+                    nome: userData.nome,
+                    imagem: userData.imagem || '/images/padrao.png'
+                  };
+                  this.userCache[msg.autorId] = user;
+                } catch (error) {
+                  console.error('Error loading user:', error);
+                  user = {
+                    _id: msg.autorId,
+                    nome: 'Usuário',
+                    imagem: '/images/padrao.png'
+                  };
+                }
               }
-            }
 
-            return {
-              id: msg._id,
-              content: msg.content,
-              timestamp: new Date(),
-              user: user,
-              type: msg.type || 'message'
-            };
-          });
+              return {
+                id: msg._id,
+                content: msg.content,
+                timestamp: new Date(),
+                user: user,
+                type: msg.type || 'message'
+              };
+            });
 
           this.messages = await Promise.all(messagesPromises);
         },
@@ -181,6 +186,10 @@ export class MessageComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  goToPrivateMessages() {
+    this.router.navigate(['/private-messages']);
   }
 
   logout() {

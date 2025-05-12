@@ -21,7 +21,8 @@ function messageRouter() {
             const message = new Message({
                 content: req.body.texto,
                 autorId: req.userId,
-                type: req.body.type || 'message'
+                type: req.body.type || 'message',
+                destination: req.body.destination || null
             });
             await message.save();
             res.status(201).json(message);
@@ -73,6 +74,23 @@ function messageRouter() {
             res.status(204).send();
         } catch (error) {
             res.status(400).json({ error: 'Erro ao deletar mensagem', detailedMessage: error });
+        }
+    });
+
+    // Buscar mensagens privadas entre dois usuários
+    router.get('/private/:userId', async (req, res) => {
+        try {
+            const { userId } = req.params;
+            const myId = req.userId;
+            const messages = await Message.find({
+                $or: [
+                    { autorId: myId, destination: userId },
+                    { autorId: userId, destination: myId }
+                ]
+            }).sort({ createdAt: 1 });
+            res.json(messages);
+        } catch (error) {
+            res.status(500).json({ error: 'Erro ao buscar mensagens privadas' });
         }
     });
 

@@ -1,0 +1,72 @@
+<div class="private-message-container">
+  <div class="private-message-header">
+    <button (click)="goBack()" class="back-button">
+      <i class="fas fa-arrow-left"></i> Voltar
+    </button>
+    <h2>Mensagens Privadas</h2>
+  </div>
+
+  <div class="private-message-content">
+    <div class="user-list" *ngIf="!selectedUser">
+      <h3>Selecione um usuário para conversar</h3>
+      
+      <div *ngIf="users.length === 0" class="empty-state">
+        <p>Nenhum usuário encontrado</p>
+      </div>
+
+      <div *ngIf="users.length > 0" class="user-grid">
+        <div *ngFor="let user of users" class="user-card" (click)="selectUser(user)">
+          <img
+            [src]="getImageUrl(user.imagem)"
+            [alt]="user.nome"
+            class="user-avatar"
+            (error)="onImageError($event)"
+          />
+          <span class="user-name">{{ user.nome }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-container" *ngIf="selectedUser">
+      <ng-container *ngIf="isLoading">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Carregando mensagens...</p>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="!isLoading">
+        <div class="chat-header">
+          <img
+            [src]="getImageUrl(selectedUser.imagem)"
+            [alt]="selectedUser.nome"
+            class="user-avatar"
+            (error)="onImageError($event)"
+          />
+          <span class="user-name">{{ selectedUser.nome }}</span>
+        </div>
+
+        <div class="message-list" #messageList>
+          <div *ngIf="messages.length === 0" class="empty-state">
+            Nenhuma mensagem encontrada
+          </div>
+          <div *ngFor="let message of messages" class="message-item" [ngClass]="{'message-sent': message.user._id === currentUser?._id, 'message-received': message.user._id !== currentUser?._id}">
+            <div class="message-content">
+              <p>{{ message.content }}</p>
+              <span class="message-time">{{ message.timestamp | date : 'short' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="message-input">
+          <input
+            type="text"
+            [(ngModel)]="newMessage"
+            placeholder="Digite sua mensagem..."
+            (keyup.enter)="sendMessage()"
+          />
+          <button (click)="sendMessage()">Enviar</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div> 

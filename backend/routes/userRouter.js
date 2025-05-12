@@ -81,9 +81,9 @@ function userRouter() {
         }
     });
 
-    router.get('/', authMiddleware, adminMiddleware, async (req, res) => {
+    router.get('/', authMiddleware, async (req, res) => {
         try {
-            const users = await User.find();
+            const users = await User.find().select('-password -admin');
             res.json(users);
         } catch (error) {
             res.status(500).json({ error: 'Erro ao buscar usuários' });

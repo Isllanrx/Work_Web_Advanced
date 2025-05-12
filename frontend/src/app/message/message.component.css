@@ -304,3 +304,52 @@
     transform: translateY(0);
   }
 }
+
+.private-message-indicator {
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 8px;
+  font-style: italic;
+}
+
+.message-destination-selector {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 8px;
+  min-width: 200px;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.input-row label {
+  min-width: 100px;
+  margin-right: 8px;
+}
+
+.private-message-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  background: linear-gradient(45deg, #006ea1, #81c784);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  width: 100%;
+  justify-content: center;
+}
+
+.private-message-button:hover {
+  background: linear-gradient(45deg, #81c784, #4caf50);
+  transform: scale(1.05);
+}

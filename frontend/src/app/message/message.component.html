@@ -34,6 +34,9 @@
           (error)="onImageError($event)"
         />
         <span class="user-name">{{ message.user.nome }}</span>
+        <span *ngIf="message.destination" class="private-message-indicator">
+          (Mensagem privada)
+        </span>
       </div>
       <div
         class="message-content"
@@ -83,16 +86,23 @@
   </div>
 
   <div class="message-input message-input-vertical">
-    <label for="message-type">Tipo Mensagem: </label>
-    <select
-      class="message-type-selector message-type-selector-below"
-      [(ngModel)]="selectedMessageType"
-      id="message-type"
-    >
-      <option value="message">Mensagem</option>
-      <option value="alert">Alerta</option>
-      <option value="info">Informação</option>
-    </select>
+    <div class="input-row">
+      <button class="private-message-button" (click)="goToPrivateMessages()">
+        <i class="fas fa-envelope"></i> Mensagens Privadas
+      </button>
+    </div>
+    <div class="input-row">
+      <label for="message-type">Tipo Mensagem: </label>
+      <select
+        class="message-type-selector message-type-selector-below"
+        [(ngModel)]="selectedMessageType"
+        id="message-type"
+      >
+        <option value="message">Mensagem</option>
+        <option value="alert">Alerta</option>
+        <option value="info">Informação</option>
+      </select>
+    </div>
     <div class="input-row">
       <input
         type="text"
